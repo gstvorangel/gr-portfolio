@@ -11,7 +11,7 @@
 
   <header class="site-header">
     <div class="container header-inner">
-      <a class="logo" href="#" aria-label="GR home">GR.</a>
+      <a class="logo" href="#" aria-label="GR home">GR<span class="logo-dot">.</span></a>
       <nav aria-label="Primary navigation">
         <ul class="nav-list">
           <li><a href="#work">Work</a></li>
@@ -25,10 +25,20 @@
   <main id="main-content">
     <section class="hero-section" aria-labelledby="intro-heading">
       <div class="container">
-        <div class="hero-media" aria-hidden="true"></div>
+        <div class="hero-media" aria-hidden="true">
+          <video
+            class="hero-video"
+            src="https://www.dropbox.com/scl/fi/jebmnvfppzm2ji3kkpghh/placeholder-video.mp4?rlkey=fcinbtky0vrf5abjnz11tprl4&st=ier1azcg&raw=1"
+            muted
+            playsinline
+            loop
+            preload="metadata"
+            autoplay
+          ></video>
+        </div>
 
         <h1 id="intro-heading" class="intro-text">
-          I&rsquo;m Gustavo Rangel, a motion designer and Notch specialist working in large-format live entertainment and immersive installations. I solve technical and creative challenges by building reliable, high-performance real-time workflows.
+          I&rsquo;m <span class="name-accent">Gustavo Rangel</span>, a motion designer and Notch specialist working in large-format live entertainment and immersive installations. I solve technical and creative challenges by building reliable, high-performance real-time workflows.
         </h1>
       </div>
     </section>
@@ -39,28 +49,46 @@
 
         <div class="project-grid">
           <article class="project-card">
-            <div class="project-thumb" aria-hidden="true"></div>
-            <p class="project-caption">Project Name</p>
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-poster"></div>
+              <video class="project-preview" muted playsinline loop preload="metadata"></video>
+            </div>
+            <p class="project-caption">GDragon Tour</p>
           </article>
           <article class="project-card">
-            <div class="project-thumb" aria-hidden="true"></div>
-            <p class="project-caption">Project Name</p>
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-poster"></div>
+              <video class="project-preview" muted playsinline loop preload="metadata"></video>
+            </div>
+            <p class="project-caption">AURA Invalides</p>
           </article>
           <article class="project-card">
-            <div class="project-thumb" aria-hidden="true"></div>
-            <p class="project-caption">Project Name</p>
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-poster"></div>
+              <video class="project-preview" muted playsinline loop preload="metadata"></video>
+            </div>
+            <p class="project-caption">Billie Eilish Tour</p>
           </article>
           <article class="project-card">
-            <div class="project-thumb" aria-hidden="true"></div>
-            <p class="project-caption">Project Name</p>
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-poster"></div>
+              <video class="project-preview" muted playsinline loop preload="metadata"></video>
+            </div>
+            <p class="project-caption">Ville de Soissons</p>
           </article>
           <article class="project-card">
-            <div class="project-thumb" aria-hidden="true"></div>
-            <p class="project-caption">Project Name</p>
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-poster"></div>
+              <video class="project-preview" muted playsinline loop preload="metadata"></video>
+            </div>
+            <p class="project-caption">Phish at the Sphere</p>
           </article>
           <article class="project-card">
-            <div class="project-thumb" aria-hidden="true"></div>
-            <p class="project-caption">Project Name</p>
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-poster"></div>
+              <video class="project-preview" muted playsinline loop preload="metadata"></video>
+            </div>
+            <p class="project-caption">AURA Saint Roch</p>
           </article>
         </div>
       </div>
@@ -75,13 +103,15 @@
           <a href="mailto:gstvorangel@gmail.com">gstvorangel@gmail.com</a>
         </div>
         <ul id="lab" class="social-list" aria-label="Social links">
-          <li><a href="#">X</a></li>
-          <li><a href="#">TikTok</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Linkedin</a></li>
+          <li><a href="https://x.com/gstvorangel" target="_blank" rel="noopener noreferrer">X</a></li>
+          <li><a href="https://www.tiktok.com/@gstvorangel" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+          <li><a href="https://instagram.com/diewalkure" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/in/gustavo-perez-rangel/" target="_blank" rel="noopener noreferrer">Linkedin</a></li>
         </ul>
       </div>
     </div>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>

@@ -31,14 +31,14 @@ a {
 }
 
 a:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.15em;
+  text-decoration: none;
+  color: #9b9c97;
 }
 
 a:focus-visible {
   outline: 2px solid #111111;
   outline-offset: 3px;
+  color: #9b9c97;
 }
 
 .skip-link {
@@ -92,8 +92,18 @@ a:focus-visible {
   line-height: 1;
 }
 
+.logo:hover,
+.logo:focus-visible {
+  text-decoration: none;
+}
+
 .site-header a {
   color: #ffffff;
+}
+
+.site-header a:hover,
+.site-header a:focus-visible {
+  color: #9b9c97;
 }
 
 .nav-list {
@@ -115,17 +125,20 @@ a:focus-visible {
 }
 
 .hero-media {
+  position: relative;
+  overflow: hidden;
   width: min(100%, calc((100svh - var(--hero-fold-offset)) * 16 / 9));
   margin-inline: auto;
   background-color: #101010;
-  background-image:
-    radial-gradient(circle at 18% 22%, rgba(255, 231, 130, 0.95), rgba(255, 231, 130, 0) 42%),
-    radial-gradient(circle at 82% 74%, rgba(96, 199, 255, 0.95), rgba(96, 199, 255, 0) 44%),
-    linear-gradient(135deg, #1f1446 0%, #0c4f6f 46%, #5b1f2d 100%);
-  background-size: cover;
-  background-position: center;
   border-radius: var(--radius);
   aspect-ratio: 16 / 9;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 
 .intro-text {
@@ -136,6 +149,10 @@ a:focus-visible {
   line-height: 0.96;
   font-weight: 700;
   letter-spacing: -0.02em;
+}
+
+.name-accent {
+  color: #9b9c97;
 }
 
 .work-section {
@@ -164,47 +181,76 @@ a:focus-visible {
 }
 
 .project-thumb {
+  position: relative;
+  overflow: hidden;
   aspect-ratio: 1 / 1;
   border-radius: var(--radius);
+}
+
+.project-poster {
+  position: absolute;
+  inset: 0;
   background-color: #181818;
   background-image: linear-gradient(140deg, var(--thumb-a, #1a5f9e), var(--thumb-b, #ee7d34));
   background-size: cover;
   background-position: center;
 }
 
-.project-card:nth-child(1) .project-thumb {
+.project-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 240ms ease;
+  pointer-events: none;
+}
+
+.project-preview.is-visible {
+  opacity: 1;
+}
+
+.project-card:nth-child(1) .project-poster {
   --thumb-a: #314d92;
   --thumb-b: #5db8e4;
+  background-image: url("assets/posters/gdragon-tour.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
-.project-card:nth-child(2) .project-thumb {
+.project-card:nth-child(2) .project-poster {
   --thumb-a: #6a3a96;
   --thumb-b: #ff934f;
+  background-image: url("assets/posters/aura-invalides.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
-.project-card:nth-child(3) .project-thumb {
+.project-card:nth-child(3) .project-poster {
   --thumb-a: #145c4d;
   --thumb-b: #f3d250;
+  background-image: url("assets/posters/billie-tour.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
-.project-card:nth-child(4) .project-thumb {
+.project-card:nth-child(4) .project-poster {
   --thumb-a: #80395d;
   --thumb-b: #f7a7a0;
+  background-image: url("assets/posters/ville-de-soissons.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
-.project-card:nth-child(5) .project-thumb {
+.project-card:nth-child(5) .project-poster {
   --thumb-a: #1f3c88;
   --thumb-b: #9fd3c7;
+  background-image: url("assets/posters/phish-sphere23.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
-.project-card:nth-child(6) .project-thumb {
+.project-card:nth-child(6) .project-poster {
   --thumb-a: #3b1f2b;
   --thumb-b: #fca652;
+  background-image: url("assets/posters/aura-saint-roch.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
 .project-caption {
   margin: 0.45rem 0 0;
-  font-size: clamp(1.15rem, 1.6vw, 1.6rem);
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
   line-height: 1.3;
   color: var(--muted);
   font-weight: 600;
@@ -281,5 +327,11 @@ a:focus-visible {
 
   .social-list {
     justify-content: flex-start;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .project-preview {
+    display: none;
   }
 }
