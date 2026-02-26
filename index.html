@@ -18,9 +18,41 @@
           <li><a href="#lab">Lab</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
+        <button
+          class="nav-toggle icon-btn"
+          type="button"
+          aria-label="Open menu"
+          aria-controls="mobile-drawer"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle-icon" aria-hidden="true"></span>
+        </button>
       </nav>
     </div>
   </header>
+
+  <div
+    id="mobile-drawer"
+    class="mobile-drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+  >
+    <div class="mobile-drawer-top">
+      <a class="logo" href="#" aria-label="GR home">GR<span class="logo-dot">.</span></a>
+      <button class="mobile-drawer-close icon-btn" type="button" aria-label="Close menu">X</button>
+    </div>
+
+    <nav class="mobile-drawer-nav" aria-label="Mobile navigation">
+      <ul class="mobile-drawer-menu">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#lab">Lab</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <a class="mobile-drawer-contact" href="mailto:gstvorangel@gmail.com">Let&rsquo;s collaborate</a>
+  </div>
 
   <main id="main-content">
     <section class="hero-section" aria-labelledby="intro-heading">
