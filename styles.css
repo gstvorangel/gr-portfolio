@@ -125,7 +125,7 @@ a:focus-visible {
   font-weight: 600;
 }
 
-.nav-toggle {
+.nav-toggle.icon-btn {
   display: none;
 }
 
@@ -373,11 +373,11 @@ a:focus-visible {
 }
 
 @media (max-width: 600px) {
-  .nav-list {
+  .nav-desktop {
     display: none;
   }
 
-  .nav-toggle {
+  .nav-toggle.icon-btn {
     display: inline-flex;
     position: fixed;
     top: var(--icon-btn-top);
