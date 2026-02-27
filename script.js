@@ -1,11 +1,21 @@
 const HOVER_VIDEO_PLACEHOLDER_URL =
   "https://www.dropbox.com/scl/fi/jebmnvfppzm2ji3kkpghh/placeholder-video.mp4?rlkey=fcinbtky0vrf5abjnz11tprl4&st=ier1azcg&raw=1";
+const GDRAGON_HOVER_VIDEO_URL =
+  "https://www.dropbox.com/scl/fi/b8vg1909q9h3p8pejqbhf/hover.mp4?rlkey=6wlnkb5j2tky7k1o7z5vllkjt&st=qpb2sd94&raw=1";
+const BILLIE_HOVER_VIDEO_URL =
+  "https://www.dropbox.com/scl/fi/jjj9lb3x4axckepz1f7a7/hover.mp4?rlkey=atigso6bz8w8rhctvhtifi4hm&st=1f1ouy0d&raw=1";
 
 (() => {
   const previewVideos = document.querySelectorAll(".project-preview");
 
-  previewVideos.forEach((video) => {
-    video.src = HOVER_VIDEO_PLACEHOLDER_URL;
+  previewVideos.forEach((video, index) => {
+    if (index === 0) {
+      video.src = GDRAGON_HOVER_VIDEO_URL;
+    } else if (index === 2) {
+      video.src = BILLIE_HOVER_VIDEO_URL;
+    } else {
+      video.src = HOVER_VIDEO_PLACEHOLDER_URL;
+    }
     video.muted = true;
     video.loop = true;
     video.playsInline = true;
