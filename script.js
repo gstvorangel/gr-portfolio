@@ -51,11 +51,65 @@ const HOVER_VIDEO_PLACEHOLDER_URL =
   const focusableSelector =
     'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
   const mobileBreakpoint = window.matchMedia("(max-width: 600px)");
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const drawerCloseFallbackMs = 800;
 
   let lastFocusedElement = null;
   let previousBodyOverflow = "";
+  let previousBodyTouchAction = "";
+  let closeTransitionFallbackId = null;
+  let closeTransitionHandler = null;
+  let openAnimationFrameId = null;
 
   const isOpen = () => drawer.classList.contains("is-open");
+  const isClosing = () => drawer.classList.contains("is-closing");
+
+  const clearCloseTransitionWait = () => {
+    if (closeTransitionHandler) {
+      drawer.removeEventListener("transitionend", closeTransitionHandler);
+      closeTransitionHandler = null;
+    }
+
+    if (closeTransitionFallbackId !== null) {
+      window.clearTimeout(closeTransitionFallbackId);
+      closeTransitionFallbackId = null;
+    }
+  };
+
+  const lockBodyScroll = () => {
+    if (!document.body.classList.contains("menu-open")) {
+      previousBodyOverflow = document.body.style.overflow;
+      previousBodyTouchAction = document.body.style.touchAction;
+    }
+
+    document.body.classList.add("menu-open");
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+  };
+
+  const unlockBodyScroll = () => {
+    if (!document.body.classList.contains("menu-open")) return;
+
+    document.body.classList.remove("menu-open");
+    document.body.style.overflow = previousBodyOverflow;
+    document.body.style.touchAction = previousBodyTouchAction;
+    previousBodyOverflow = "";
+    previousBodyTouchAction = "";
+  };
+
+  const setDrawerClosed = ({ restoreFocus }) => {
+    drawer.classList.remove("is-closing");
+    drawer.hidden = true;
+    drawer.setAttribute("aria-hidden", "true");
+    openButton.setAttribute("aria-expanded", "false");
+    unlockBodyScroll();
+
+    if (restoreFocus && lastFocusedElement) {
+      lastFocusedElement.focus();
+    }
+
+    lastFocusedElement = null;
+  };
 
   const getFocusableElements = () =>
     Array.from(drawer.querySelectorAll(focusableSelector)).filter(
@@ -65,27 +119,56 @@ const HOVER_VIDEO_PLACEHOLDER_URL =
   const openDrawer = () => {
     if (!mobileBreakpoint.matches || isOpen()) return;
 
+    clearCloseTransitionWait();
+    if (openAnimationFrameId !== null) {
+      window.cancelAnimationFrame(openAnimationFrameId);
+      openAnimationFrameId = null;
+    }
+
     lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    previousBodyOverflow = document.body.style.overflow;
-    drawer.classList.add("is-open");
+    drawer.hidden = false;
+    drawer.classList.remove("is-closing");
     drawer.setAttribute("aria-hidden", "false");
     openButton.setAttribute("aria-expanded", "true");
-    document.body.style.overflow = "hidden";
-    closeButton.focus();
+    lockBodyScroll();
+
+    openAnimationFrameId = window.requestAnimationFrame(() => {
+      drawer.classList.add("is-open");
+      closeButton.focus();
+      openAnimationFrameId = null;
+    });
   };
 
-  const closeDrawer = ({ restoreFocus = true } = {}) => {
-    if (!isOpen()) return;
+  const closeDrawer = ({ restoreFocus = true, immediate = false } = {}) => {
+    if (!isOpen() && !isClosing()) return;
 
+    if (openAnimationFrameId !== null) {
+      window.cancelAnimationFrame(openAnimationFrameId);
+      openAnimationFrameId = null;
+    }
+
+    clearCloseTransitionWait();
     drawer.classList.remove("is-open");
+    drawer.classList.add("is-closing");
     drawer.setAttribute("aria-hidden", "true");
     openButton.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = previousBodyOverflow;
-    previousBodyOverflow = "";
 
-    if (restoreFocus && lastFocusedElement) {
-      lastFocusedElement.focus();
+    if (immediate || prefersReducedMotion.matches) {
+      setDrawerClosed({ restoreFocus });
+      return;
     }
+
+    closeTransitionHandler = (event) => {
+      if (event.target !== drawer || event.propertyName !== "opacity") return;
+      clearCloseTransitionWait();
+      setDrawerClosed({ restoreFocus });
+    };
+
+    drawer.addEventListener("transitionend", closeTransitionHandler);
+    closeTransitionFallbackId = window.setTimeout(() => {
+      clearCloseTransitionWait();
+      setDrawerClosed({ restoreFocus });
+    }, drawerCloseFallbackMs);
   };
 
   const trapFocus = (event) => {
@@ -140,9 +223,15 @@ const HOVER_VIDEO_PLACEHOLDER_URL =
 
   const handleBreakpointChange = (event) => {
     if (!event.matches) {
-      closeDrawer({ restoreFocus: false });
+      closeDrawer({ restoreFocus: false, immediate: true });
     }
   };
+
+  drawer.hidden = true;
+  drawer.classList.remove("is-open", "is-closing");
+  drawer.setAttribute("aria-hidden", "true");
+  openButton.setAttribute("aria-expanded", "false");
+  unlockBodyScroll();
 
   if (typeof mobileBreakpoint.addEventListener === "function") {
     mobileBreakpoint.addEventListener("change", handleBreakpointChange);
