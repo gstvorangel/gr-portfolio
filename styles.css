@@ -125,7 +125,7 @@ a:focus-visible {
   font-weight: 600;
 }
 
-.nav-toggle.icon-btn {
+.nav-toggle.icon-btn--header {
   display: none;
 }
 
@@ -160,6 +160,10 @@ a:focus-visible {
 .icon-btn:focus-visible {
   outline: 2px solid #111111;
   outline-offset: 2px;
+}
+
+.icon-btn--header {
+  position: static;
 }
 
 .mobile-drawer {
@@ -373,16 +377,19 @@ a:focus-visible {
 }
 
 @media (max-width: 600px) {
+  .header-inner > nav {
+    margin-inline-start: auto;
+    display: flex;
+    align-items: center;
+  }
+
   .nav-desktop {
     display: none;
   }
 
-  .nav-toggle.icon-btn {
+  .nav-toggle.icon-btn--header {
     display: inline-flex;
-    position: fixed;
-    top: var(--icon-btn-top);
-    right: var(--icon-btn-offset-inline);
-    z-index: 240;
+    margin-inline-start: auto;
     mix-blend-mode: difference;
   }
 
@@ -427,7 +434,7 @@ a:focus-visible {
     display: none;
   }
 
-  .mobile-drawer-close {
+  .mobile-drawer-close.icon-btn--overlay {
     position: fixed;
     top: var(--icon-btn-top);
     right: var(--icon-btn-offset-inline);
