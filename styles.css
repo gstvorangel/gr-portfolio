@@ -357,9 +357,3 @@ a:focus-visible {
     justify-content: flex-start;
   }
 }
-
-@media (hover: none), (pointer: coarse) {
-  .project-preview {
-    display: none;
-  }
-}
