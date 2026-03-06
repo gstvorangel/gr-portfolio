@@ -65,16 +65,26 @@ a:focus-visible {
   padding-inline: clamp(16px, 2vw, 48px);
 }
 
+.pageContainer {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: clamp(16px, 2vw, 48px);
+}
+
 @media (min-width: 901px) {
-  .container {
+  .container,
+  .pageContainer {
     padding-inline: calc(clamp(16px, 2vw, 48px) + 50px);
   }
 }
 
 .site-header {
   padding-block: clamp(1.75rem, 4vw, 2.75rem);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   background: transparent;
   border-bottom: 0;
@@ -83,9 +93,14 @@ a:focus-visible {
 
 .header-inner {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
+}
+
+.header-inner > nav {
+  width: clamp(32.5rem, 45vw, 56.25rem);
+  margin-inline-start: auto;
 }
 
 .logo {
@@ -110,30 +125,37 @@ a:focus-visible {
 
 .nav-list {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: flex-end;
-  gap: 2rem;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-family: inherit;
+  font-size: clamp(2.4rem, 3.2vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1;
 }
 
 .hero-section {
-  padding-top: clamp(0.25rem, 0.6vw, 0.75rem);
-  padding-bottom: clamp(1.2rem, 3vh, 2rem);
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .hero-media {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  width: min(100%, calc((100svh - var(--hero-fold-offset)) * 16 / 9));
-  margin-inline: auto;
+  margin: 0;
   background-color: #101010;
-  border-radius: var(--radius);
-  aspect-ratio: 16 / 9;
+  border-radius: 0;
+  aspect-ratio: auto;
 }
 
 .hero-video {
@@ -143,10 +165,14 @@ a:focus-visible {
   object-fit: cover;
 }
 
+.intro-section {
+  padding-top: clamp(1.5rem, 3vw, 3rem);
+}
+
 .intro-text {
   max-width: none;
   width: 100%;
-  margin: clamp(2rem, 6vw, 4.5rem) 0 0;
+  margin: 0;
   font-size: clamp(1.95rem, 4.4vw, 3.75rem);
   line-height: 0.96;
   font-weight: 700;
@@ -163,27 +189,38 @@ a:focus-visible {
 }
 
 .section-label {
-  margin: 0;
-  font-size: clamp(2rem, 3.2vw, 3.1rem);
-  line-height: 0.96;
+  margin: 0 0 clamp(1.5rem, 3vw, 3.5rem);
+  font-size: clamp(3rem, 6vw, 6.4rem);
+  line-height: 0.9;
   font-weight: 700;
   letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .project-grid {
-  margin-top: clamp(3rem, 6vw, 5rem);
+  margin-top: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   column-gap: clamp(1rem, 1.8vw, 1.5rem);
   row-gap: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+  width: 100%;
 }
 
 .project-card {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  align-self: start;
+  width: 100%;
 }
 
 .project-thumb {
   position: relative;
+  width: 100%;
   overflow: hidden;
   aspect-ratio: 1 / 1;
   border-radius: var(--radius);
@@ -214,46 +251,62 @@ a:focus-visible {
   opacity: 1;
 }
 
-.project-card:nth-child(1) .project-poster {
+.project-card--gdragon .project-poster {
   --thumb-a: #314d92;
   --thumb-b: #5db8e4;
   background-image: url("assets/posters/gdragon-tour.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
-.project-card:nth-child(2) .project-poster {
+.project-card--invalides .project-poster {
   --thumb-a: #6a3a96;
   --thumb-b: #ff934f;
   background-image: url("assets/posters/aura-invalides.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
-.project-card:nth-child(3) .project-poster {
+.project-card--billie .project-poster {
   --thumb-a: #145c4d;
   --thumb-b: #f3d250;
   background-image: url("assets/posters/billie-tour.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
-.project-card:nth-child(4) .project-poster {
+.project-card--soissons .project-poster {
   --thumb-a: #80395d;
   --thumb-b: #f7a7a0;
   background-image: url("assets/posters/ville-de-soissons.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
-.project-card:nth-child(5) .project-poster {
+.project-card--phish .project-poster {
   --thumb-a: #1f3c88;
   --thumb-b: #9fd3c7;
   background-image: url("assets/posters/phish-sphere23.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
-.project-card:nth-child(6) .project-poster {
+.project-card--saint-roch .project-poster {
   --thumb-a: #3b1f2b;
   --thumb-b: #fca652;
   background-image: url("assets/posters/aura-saint-roch.webp"), linear-gradient(140deg, var(--thumb-a), var(--thumb-b));
 }
 
-.project-caption {
-  margin: 0.45rem 0 0;
-  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
-  line-height: 1.3;
+.project-label {
+  margin-top: clamp(0.625rem, 1vw, 1rem);
+  width: 100%;
+}
+
+.project-label-primary,
+.project-label-secondary {
+  margin: 0;
+  font-size: clamp(1.25rem, 6vw, 1.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+.project-label-primary {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.project-label-secondary {
+  margin-top: -0.02em;
   color: var(--muted);
   font-weight: 600;
 }
@@ -321,9 +374,43 @@ a:focus-visible {
   opacity: 0.72;
 }
 
-@media (max-width: 900px) {
+@media (min-width: 768px) {
+  .project-label-primary,
+  .project-label-secondary {
+    font-size: clamp(1.625rem, 3vw, 2.5rem);
+  }
+
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .header-inner > nav {
+    width: auto;
+  }
+
+  .nav-list {
+    justify-content: flex-end;
+    gap: clamp(0.9rem, 4vw, 1.6rem);
+    width: auto;
+    font-size: clamp(1.2rem, 4.8vw, 1.6rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .project-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-auto-flow: row;
+  }
+
+  .project-card {
+    grid-column: span 6;
+  }
+
+  .project-label-primary,
+  .project-label-secondary {
+    font-size: clamp(2rem, 2.8vw, 3.5rem);
   }
 }
 
@@ -335,16 +422,15 @@ a:focus-visible {
 
   .header-inner > nav {
     margin-inline-start: auto;
+    width: auto;
   }
 
   .nav-list {
     flex-wrap: nowrap;
-    gap: clamp(0.75rem, 3vw, 1.25rem);
-    font-size: clamp(0.86rem, 3.2vw, 1rem);
-  }
-
-  .project-grid {
-    grid-template-columns: 1fr;
+    justify-content: flex-end;
+    gap: clamp(0.9rem, 4vw, 1.6rem);
+    width: auto;
+    font-size: clamp(1.2rem, 4.8vw, 1.6rem);
   }
 
   .footer-inner {
