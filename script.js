@@ -1,5 +1,43 @@
 const MOBILE_VIDEO_SELECTOR = ".tileVideo";
 const MOBILE_AUTOPLAY_THRESHOLD = 0.6;
+const LENIS_LERP = 0.1;
+
+(() => {
+  if (typeof window === "undefined" || typeof window.Lenis !== "function") return;
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const coarsePointer = window.matchMedia("(pointer: coarse)");
+  const noHover = window.matchMedia("(hover: none)");
+  const touchCapable = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  const shouldDisableLenis = prefersReducedMotion.matches || coarsePointer.matches || noHover.matches || touchCapable;
+
+  if (shouldDisableLenis) return;
+
+  const lenis = new window.Lenis({
+    lerp: LENIS_LERP,
+    smoothWheel: true,
+    smoothTouch: false,
+    autoRaf: false,
+    anchors: true,
+  });
+
+  let rafId = null;
+  const raf = (time) => {
+    lenis.raf(time);
+    rafId = window.requestAnimationFrame(raf);
+  };
+  rafId = window.requestAnimationFrame(raf);
+
+  const cleanup = () => {
+    if (rafId !== null) {
+      window.cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    lenis.destroy();
+  };
+
+  window.addEventListener("pagehide", cleanup, { once: true });
+})();
 
 (() => {
   const previewVideos = Array.from(document.querySelectorAll(MOBILE_VIDEO_SELECTOR));
