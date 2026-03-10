@@ -1,6 +1,56 @@
 const MOBILE_VIDEO_SELECTOR = ".tileVideo";
 const MOBILE_AUTOPLAY_THRESHOLD = 0.6;
 const LENIS_LERP = 0.1;
+const REVEAL_THRESHOLD = 0.2;
+const REVEAL_STAGGER_MS = 80;
+
+(() => {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const revealBlocks = Array.from(document.querySelectorAll("[data-reveal]"));
+  const revealGroups = Array.from(document.querySelectorAll("[data-reveal-group]"));
+
+  if (
+    prefersReducedMotion.matches ||
+    typeof window.IntersectionObserver !== "function" ||
+    (revealBlocks.length === 0 && revealGroups.length === 0)
+  ) {
+    document.documentElement.classList.remove("has-reveal-motion");
+    return;
+  }
+
+  revealGroups.forEach((group) => {
+    const tiles = Array.from(group.querySelectorAll("[data-reveal-tile]"));
+
+    tiles.forEach((tile, index) => {
+      tile.style.setProperty("--reveal-delay", `${(index * REVEAL_STAGGER_MS) / 1000}s`);
+    });
+  });
+
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const { target } = entry;
+
+        if (target.hasAttribute("data-reveal-group")) {
+          const tiles = target.querySelectorAll("[data-reveal-tile]");
+          tiles.forEach((tile) => tile.classList.add("is-revealed"));
+        } else {
+          target.classList.add("is-revealed");
+        }
+
+        observer.unobserve(target);
+      });
+    },
+    {
+      threshold: REVEAL_THRESHOLD,
+    }
+  );
+
+  revealBlocks.forEach((block) => revealObserver.observe(block));
+  revealGroups.forEach((group) => revealObserver.observe(group));
+})();
 
 (() => {
   if (typeof window === "undefined" || typeof window.Lenis !== "function") return;

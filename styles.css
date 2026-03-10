@@ -170,6 +170,10 @@ a:focus-visible {
   padding-top: 0;
 }
 
+.reveal-block {
+  width: 100%;
+}
+
 .intro-text {
   max-width: none;
   width: 100%;
@@ -216,6 +220,36 @@ a:focus-visible {
   min-width: 0;
   align-self: start;
   width: 100%;
+}
+
+.has-reveal-motion .reveal-block[data-reveal],
+.has-reveal-motion [data-reveal-tile] {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.has-reveal-motion .reveal-block[data-reveal] {
+  transform: translateY(16px);
+  transition:
+    opacity 0.88s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.88s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.has-reveal-motion .reveal-block[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.has-reveal-motion [data-reveal-tile] {
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+}
+
+.has-reveal-motion [data-reveal-tile].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .project-thumb {
