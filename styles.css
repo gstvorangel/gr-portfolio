@@ -1,3 +1,19 @@
+@font-face {
+  font-family: "Circular XX";
+  src: url("assets/fonts/CircularXXTrial-Book.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Circular XX";
+  src: url("assets/fonts/CircularXXTrial-Medium.otf") format("opentype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
 :root {
   --bg: #ffffff;
   --text: #111111;
@@ -6,6 +22,19 @@
   --radius: 6px;
   --container-max: 1760px;
   --hero-fold-offset: clamp(8rem, 17vh, 11rem);
+  --font-sans: "Circular XX", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-fallback-sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --tracking-meta: 0.08em;
+  --tracking-body: 0.01em;
+  --tracking-display: 0.015em;
+  --text-meta: clamp(0.78rem, 0.18vw + 0.75rem, 0.9rem);
+  --text-body: clamp(0.98rem, 0.12vw + 0.96rem, 1.08rem);
+  --text-intro: clamp(1.58rem, 1.3rem + 2vw, 3.08rem);
+  --text-heading: clamp(2.35rem, 1.65rem + 3.2vw, 4.8rem);
+  --text-project-title: clamp(0.98rem, 0.22vw + 0.94rem, 1.1rem);
+  --text-project-meta: clamp(0.84rem, 0.14vw + 0.81rem, 0.94rem);
 }
 
 *,
@@ -26,7 +55,14 @@ body {
 body {
   margin: 0;
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.5;
+  letter-spacing: var(--tracking-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-synthesis: none;
 }
 
 a {
@@ -104,9 +140,11 @@ a:focus-visible {
 }
 
 .logo {
-  font-size: 2.7rem;
-  font-weight: 800;
+  font-size: clamp(1.55rem, 1.25rem + 1vw, 2.05rem);
+  font-weight: var(--font-weight-medium);
   line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .logo:hover,
@@ -134,9 +172,10 @@ a:focus-visible {
   padding: 0;
   list-style: none;
   font-family: inherit;
-  font-size: clamp(2.04rem, 2.72vw, 2.3rem);
-  font-weight: 700;
-  line-height: 1;
+  font-size: var(--text-meta);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-meta);
 }
 
 .hero-section {
@@ -175,13 +214,13 @@ a:focus-visible {
 }
 
 .intro-text {
-  max-width: none;
-  width: 100%;
+  max-width: min(25ch, 100%);
+  width: min(100%, 25ch);
   margin: 0;
-  font-size: clamp(1.95rem, 4.4vw, 3.75rem);
-  line-height: 0.96;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: var(--text-intro);
+  line-height: 1.14;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--tracking-display);
 }
 
 .name-accent {
@@ -194,11 +233,11 @@ a:focus-visible {
 }
 
 .section-label {
-  margin: 0 0 clamp(1.5rem, 3vw, 3.5rem);
-  font-size: clamp(2.55rem, 5.1vw, 5.44rem);
-  line-height: 0.9;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  margin: 0 0 clamp(1.8rem, 3.5vw, 4rem);
+  font-size: var(--text-heading);
+  line-height: 0.98;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-display);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -322,28 +361,30 @@ a:focus-visible {
 }
 
 .project-label {
-  margin-top: clamp(0.5rem, 0.8vw, 0.75rem);
+  margin-top: clamp(0.8rem, 1vw, 1rem);
   width: 100%;
 }
 
 .project-label-primary,
 .project-label-secondary {
   margin: 0;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  letter-spacing: var(--tracking-body);
 }
 
 .project-label-primary {
   color: var(--text);
-  font-size: clamp(0.85rem, 3.8vw, 1rem);
-  font-weight: 700;
+  font-size: var(--text-project-title);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
 }
 
 .project-label-secondary {
-  margin-top: 0.08rem;
+  margin-top: 0.18rem;
   color: var(--muted);
-  font-size: clamp(0.76rem, 3.1vw, 0.875rem);
-  font-weight: 500;
+  font-size: var(--text-project-meta);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.45;
+  letter-spacing: 0.02em;
 }
 
 .site-footer {
@@ -352,7 +393,7 @@ a:focus-visible {
 
 .footer-inner {
   border-top: 1px solid var(--line);
-  padding-top: clamp(1.25rem, 2.8vw, 2rem);
+  padding-top: clamp(1.5rem, 2.8vw, 2.3rem);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -361,19 +402,25 @@ a:focus-visible {
 
 .footer-contact h2 {
   margin: 0;
-  font-size: clamp(2rem, 3vw, 3rem);
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.8rem, 1.35rem + 1.7vw, 2.85rem);
+  line-height: 1.05;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-display);
 }
 
 .footer-contact a {
   display: inline-block;
-  margin-top: 0.35rem;
-  font-size: clamp(1.55rem, 2.8vw, 2.8rem);
-  line-height: 1;
+  margin-top: 0.55rem;
+  font-size: clamp(1.18rem, 0.95rem + 1.1vw, 1.85rem);
+  line-height: 1.25;
   color: var(--muted);
-  font-weight: 600;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--tracking-body);
+}
+
+.glyph-fallback {
+  font-family: var(--font-fallback-sans);
+  font-weight: inherit;
 }
 
 .social-list {
@@ -385,9 +432,10 @@ a:focus-visible {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: clamp(1.15rem, 1.6vw, 1.6rem);
-  font-weight: 700;
+  font-size: var(--text-meta);
+  font-weight: var(--font-weight-medium);
   line-height: 1;
+  letter-spacing: var(--tracking-meta);
 }
 
 .social-list a {
@@ -424,7 +472,7 @@ a:focus-visible {
     justify-content: flex-end;
     gap: clamp(0.9rem, 4vw, 1.6rem);
     width: auto;
-    font-size: clamp(1.02rem, 4.08vw, 1.36rem);
+    font-size: clamp(0.72rem, 0.56rem + 0.75vw, 0.84rem);
   }
 }
 
@@ -434,11 +482,11 @@ a:focus-visible {
   }
 
   .project-label-primary {
-    font-size: clamp(0.9rem, 0.9vw, 1rem);
+    font-size: clamp(0.98rem, 0.12vw + 0.95rem, 1.08rem);
   }
 
   .project-label-secondary {
-    font-size: clamp(0.8rem, 0.75vw, 0.875rem);
+    font-size: clamp(0.84rem, 0.08vw + 0.82rem, 0.92rem);
   }
 }
 
@@ -458,7 +506,7 @@ a:focus-visible {
     justify-content: flex-end;
     gap: clamp(0.9rem, 4vw, 1.6rem);
     width: auto;
-    font-size: clamp(1.02rem, 4.08vw, 1.36rem);
+    font-size: clamp(0.72rem, 0.56rem + 0.75vw, 0.84rem);
   }
 
   .footer-inner {
